@@ -7,11 +7,15 @@ MAKEFLAGS += --warn-undefined-variables \
 ALL:=
 VPATH=.build/schemastore-json
 DYN=.build/Makefile.dynamic
+CUE?=cue-0.5.0-beta.2
 
 include $(DYN)
 $(DYN): $(wildcard .build/*.cue) # Automatically update the dynamic list of .cue targets
 	@echo '# THIS FILE IS AUTOMATICALLY MANAGED & OVERWRITTEN; DO NOT EDIT MANUALLY' >$@
-	@cue export --expression dynamic --out text jonathanmatthews.com/x/schemastore.org/.build:makefile >>$@
+	@$(CUE) export --expression dynamic --out text jonathanmatthews.com/x/schemastore.org/.build:makefile >>$@
+
+.PHONY: build
+build: clean all test ## Rebuild and test all CUE schemas
 
 .PHONY: all
 all: $(ALL) ## Create all out-of-date .cue schema files
@@ -22,8 +26,12 @@ clean: ## Remove all .cue schema files, and their containing directories
 	@rmdir -vp $(sort $(dir $(ALL))) || true
 	@rm $(DYN)
 
+.PHONY: test
+test: ## Run all tests against the CUE corpus
+	$(CUE) vet jonathanmatthews.com/x/schemastore.org/.build/tests
+
 %/schema.cue:
-	cue import jsonschema: $< --force --outfile $@ --package $(PACKAGE) --path '_#Schema:'
+	$(CUE) import jsonschema: $< --force --outfile $@ --package $(PACKAGE) --path '_#Schema:'
 %/embed.cue:
 	echo 'package $(PACKAGE)\n\n_#Schema' >$@
 
