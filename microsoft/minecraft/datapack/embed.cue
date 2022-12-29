@@ -1,3 +1,0 @@
-package datapack
-
-_#Schema

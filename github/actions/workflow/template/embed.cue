@@ -1,3 +1,0 @@
-package template
-
-_#Schema

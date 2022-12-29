@@ -1,3 +1,0 @@
-package prettierrc
-
-_#Schema

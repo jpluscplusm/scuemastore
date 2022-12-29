@@ -1,0 +1,3 @@
+[submodule ".build/upstream"]
+	path = .build/upstream
+	url = https://github.com/SchemaStore/schemastore
