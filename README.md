@@ -50,4 +50,6 @@ The `/x/` is your reminder of this.
 
 ## Expanding and improving the imported schemas
 
-[FIXME]
+Please open Issues with "please import this schema next" suggestions.
+
+This README will include development docs, sometime soon. Until then, working on the build system will be a little painful!
