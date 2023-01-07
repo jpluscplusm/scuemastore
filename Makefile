@@ -31,7 +31,7 @@ VPATH=.build/upstream/src/schemas/json
 	$(CUE) import jsonschema: "$<" --force --outfile "$@" --package $(PACKAGE_NAME) --path '_#Schema:'
 %/schemastore-embed.cue:
 	## Import :: $(PACKAGE_NAME) embedding
-	printf "package %s\n\n_#Schema" "$(PACKAGE_NAME)" >"$@"
+	printf "package %s\n\nclose({\n_#Schema\n})" "$(PACKAGE_NAME)" >"$@"
 
 ## Test
 
